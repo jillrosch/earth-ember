@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Earth & Ember</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=DM+Sans:wght@400;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    body {
+      background-color: #e1e8e5;
+      color: #4c5c54;
+    }
+
+    .notification-bar {
+      background-color: #4c5c54;
+      color: white;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+    }
+
+    header {
+      position: relative;
+      background: url('https://i.ibb.co/spHYkpXg/Untitled-design.png') center/cover no-repeat;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 0;
+    }
+
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 28px;
+      margin-bottom: 0.3rem;
+    }
+
+    .logo h1 {
+      font-family: 'Amatic SC', cursive;
+      color: white;
+      font-size: 2.3rem;
+      line-height: 1;
+    }
+
+    .logo span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      color: white;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      gap: 3rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    @media (min-width: 769px) {
+      nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .nav-row {
+        display: flex;
+        gap: 2rem;
+        margin: 0;
+      }
+
+      nav a {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+      }
+
+      nav {
+        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+      }
+
+      .nav-row {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 0.3rem 0;
+      }
+
+      .nav-row:last-child a {
+        margin-top: 8px;
+      }
+
+      nav a {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .gallery-container {
+        margin: 0 10px 3rem;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .gallery-image {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .gallery-text {
+        font-size: 1.2rem;
+      }
+
+      .values-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .value-box {
+        max-width: 100%;
+      }
+    }
+
+    .hero {
+      position: relative;
+      background-image: url('https://i.imgur.com/UYkBSXV.jpeg');
+      background-size: cover;
+      background-position: center;
+      padding: 10rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 16rem 2rem;
+      }
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 0;
+    }
+
+    .hero h2,
+    .hero p {
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-family: 'Amatic SC', cursive;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .explore-products {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 1.5rem 0 1rem;
+      color: #4c5c54;
+    }
+
+    .gallery-container {
+      max-width: 100%;
+      margin: 0 20px 3rem;
+      padding: 0;
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .gallery-image {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .gallery-image img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-image:hover img {
+      transform: scale(1.08);
+      z-index: 2;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .gallery-text {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .community-section {
+      position: relative;
+      text-align: center;
+      margin: 0;
+      padding: 4rem 1.5rem;
+      background: url('https://i.imgur.com/O4qkIaV.jpeg') center/cover no-repeat;
+      color: white;
+    }
+
+    .community-section .overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1;
+    }
+
+    .community-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .community-content h2 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .community-content p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+      background-color: #859d1f;
+      color: white;
+      padding: 0.75rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #6e8619;
+    }
+
+    .values-section {
+      background: url('https://i.imgur.com/NbaIT6Z.jpeg') center/cover no-repeat;
+      padding: 5rem 1.5rem;
+      color: black;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .value-box {
+      flex: 1;
+      min-width: 240px;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .value-box img {
+      width: 90px;
+      margin-bottom: 1rem;
+    }
+
+    .value-box h3 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: black;
+    }
+
+    .value-box p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      color: black;
+    }
+
+
+
+    .review-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://i.imgur.com/PV9ajPJ.jpeg') center/cover no-repeat;
+  padding: 4rem 1.5rem;
+  text-align: center;
+  color: white;
+}
+
+.review-section h2 {
+  font-family: 'Amatic SC', cursive;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.review-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+}
+
+.review {
+  background: white;
+  color: #4c5c54;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 320px;
+  flex: 1;
+  min-width: 250px;
+  text-align: left;
+  position: relative;
+}
+
+.review p {
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.reviewer {
+  display: block;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #4c5c54;
+}
+
+.stars {
+  color: #859d1f;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+@media (max-width: 768px) {
+  .review-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+.about-me-section {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  color: #4c5c54;
+}
+
+.about-me-text {
+  flex: 1.2;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.about-me-text p + p {
+  margin-top: 1rem;
+}
+
+.about-me-photo {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-me-photo img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+@media (max-width: 768px) {
+  .about-me-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-me-text {
+    font-size: 0.95rem;
+  }
+
+  .about-me-photo {
+  padding-top: 20px;
+  }
+
+.about-me-photo img {
+  display: block !important;
+  position: relative !important;
+  top: 20px !important;
+  z-index: 10 !important;
+}
+
+
+
+}
+
+.about-section {
+  padding: 20px;
+  background: #e1e8e5;
+  color: #4c5c54;
+  font-family: Arial, sans-serif;
+}
+
+.about-header {
+  font-family: 'Amatic SC', cursive;
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.intro {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+    footer {
+      background-color: #4c5c54;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #859d1f;
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      z-index: 1000;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+
+
+    #backToTop:hover {
+      opacity: 1;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  
+  <div class="notification-bar">
+    Shop Organic Handmade Soaps
+  </div>
+
+  <header>
+    <div class="logo">
+      <img src="https://i.ibb.co/0jMjYkQy/leaf.png" alt="Leaf icon" />
+      <h1>Earth & Ember</h1>
+      <span>Organic Soap</span>
+    </div>
+    <nav>
+      <div class="nav-row">
+        <a href="#">Home</a>
+        <a href="#handmade-soap">Handmade Soap</a>
+        <a href="#body-scrub">Body Scrub</a>
+      </div>
+      <div class="nav-row">
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Natural & Organic Skin Care</h2>
+    <p>Harnessing Earth’s Goodness for Radiant Skin</p>
+  </section>
+
+  <h2 class="explore-products">Explore Our Products</h2>
+
+  <div class="gallery-container">
+    <div class="gallery-image">
+      <img src="https://i.imgur.com/xbYBLWR.jpeg" alt="Soap" />
+      <div class="gallery-text">SOAP</div>
+    </div>
+    <div class="gallery-image">
+      <img src="https://i.imgur.com/5G3tt1n.jpeg" alt="Shampoo Bars" />
+      <div class="gallery-text">SHAMPOO BARS</div>
+    </div>
+    <div class="gallery-image">
+      <img src="https://i.imgur.com/pWil0Cm.png" alt="Coffee Scrub" />
+      <div class="gallery-text">COFFEE SCRUB</div>
+    </div>
+    <div class="gallery-image">
+      <img src="https://i.imgur.com/qFSIaBq.jpeg" alt="Body Butter" />
+      <div class="gallery-text">BODY BUTTER</div>
+    </div>
+  </div>
+
+  <section class="community-section">
+    <div class="overlay"></div>
+    <div class="community-content">
+      <h2>Be Part of the Earth & Ember Soap Community</h2>
+      <p>Sign up today and gain access to special perks, exclusive discounts, and early releases of our handcrafted organic soaps. We invite you to join us in our commitment to making pure, natural products that care for your skin and support a healthier planet.</p>
+      <button class="cta-button">JOIN NOW</button>
+    </div>
+  </section>
+
+  <section class="values-section">
+    <div class="value-box">
+      <img src="https://i.imgur.com/wS0B8Qn.png" alt="Certified Organic Icon" />
+      <h3>Certified Organic</h3>
+      <p>Our products have always, and will always, contain nothing but natural and organic ingredients.</p>
+    </div>
+    <div class="value-box">
+      <img src="https://i.imgur.com/MJAPxHi.png" alt="Simple Ingredients Icon" />
+      <h3>Simple Ingredients</h3>
+      <p>USDA certified organic, sustainably produced, cruelty-free and ethically traded.</p>
+    </div>
+    <div class="value-box">
+      <img src="https://i.imgur.com/niPUBHr.png" alt="Earth Conscious Icon" />
+      <h3>Earth Conscious</h3>
+      <p>We are mindful of our social responsibilities, prioritize sustainability and conservation, work to reduce our negative environmental impact, and support green initiatives in our community.</p>
+    </div>
+  </section>
+
+<section class="review-section">
+  <h2>Customer Reviews</h2>
+  <div class="review-row">
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p>“These soaps are amazing! My skin has never felt better.”</p>
+      <span class="reviewer">— Eric B.</span>
+    </div>
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p>“Earth & Ember changed my skincare game. All-natural and effective!”</p>
+      <span class="reviewer">— Jasmine R.</span>
+    </div>
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p>“I love how fresh and clean everything smells. Plus, eco-friendly!”</p>
+      <span class="reviewer">— Malik T.</span>
+    </div>
+  </div>
+</section>
+
+
+<section class="about-me-section">
+  <div class="about-me-text">
+    <h2 class="about-header">About Earth & Ember</h2>
+    <p>Hi, I’m Jill! Welcome to Earth & Ember, where I craft handmade soaps inspired by nature and passion. As part of a family-owned business with deep roots in the soaping industry, I’ve grown up surrounded by the craft of formulation and production. What began as a small venture has evolved into a full-scale operation, with our own factory based in Manila and Bulacan, where we create a wide range of products—from detergents and fabric softeners to powdered soaps and premium fragrances.
+</p>
+    <p>My passion for quality, natural ingredients led me to focus on organic soaps—blends made with intention, free from harsh chemicals, and designed to nourish both skin and spirit. Whether it’s a soothing lavender bar or a deeply moisturizing shea butter blend, I believe that bathing should be more than routine—it should be a moment of care and connection.
+</p>
+    <p>At Earth & Ember, I’m proud to carry forward our family legacy while also exploring new ways to bring clean, conscious, and luxurious self-care to those who value the power of nature.</p>
+   
+  </div>
+  <div class="about-me-photo">
+    <img src="https://i.imgur.com/2iNBkoV.png" alt="Jill of Earth & Ember">
+  </div>
+</section>
+
+
+
+
+  <footer>
+    &copy; 2024 Earth & Ember | Crafted with nature in mind.
+  </footer>
+
+
+<button id="backToTop">Back to Top</button>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Back to Top button
+  const backToTopBtn = document.createElement('button');
+  backToTopBtn.id = 'backToTop';
+  backToTopBtn.textContent = 'Back to Top';
+  document.body.appendChild(backToTopBtn);
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Show/hide button on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.display = 'block';
+    } else {
+      backToTopBtn.style.display = 'none';
+    }
+  });
+
+  // Initial hide
+  backToTopBtn.style.display = 'none';
+</script>
+
+</body>
+</html>
