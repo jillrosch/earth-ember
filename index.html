@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Earth & Ember</title>
   
+  <!-- Social Media Thumbnail Metadata -->
   <meta name="description" content="Handmade soap with wild energy. Earthy, bold, and clean." />
   <meta property="og:title" content="Earth & Ember" />
   <meta property="og:description" content="Handmade soap with wild energy. Earthy, bold, and clean." />
@@ -19,10 +20,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=DM+Sans:wght@400;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   
   <style>
+    /* your full CSS styles from original code (unchanged) */
   </style>
 </head>
 <body>
 
+  <!-- your full HTML from original code (unchanged) -->
 
 </body>
 </html>
@@ -428,6 +431,9 @@
       color: #4c5c54;
     }
 
+.about-header {
+  margin-bottom: 15px;
+}
     .stars {
       color: #859d1f;
       font-size: 1.2rem;
@@ -639,7 +645,7 @@
    
   </div>
   <div class="about-me-photo">
-    <img src="https://i.imgur.com/nWvdSOV.jpeg" alt="Jill of Earth & Ember">
+    <img src="https://i.imgur.com/CFAtUC3.jpeg" alt="Jill of Earth & Ember">
   </div>
 </section>
 
@@ -665,6 +671,7 @@
     });
   });
 
+  // Back to Top button
   const backToTopBtn = document.createElement('button');
   backToTopBtn.id = 'backToTop';
   backToTopBtn.textContent = 'Back to Top';
@@ -674,6 +681,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  // Show/hide button on scroll
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       backToTopBtn.style.display = 'block';
@@ -682,6 +690,7 @@
     }
   });
 
+  // Initial hide
   backToTopBtn.style.display = 'none';
 </script>
 
