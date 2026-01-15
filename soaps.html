@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handmade Soaps - Earth & Ember</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=DM+Sans:wght@400;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    body {
+      background-color: #e1e8e5;
+      color: #4c5c54;
+      line-height: 1.6;
+    }
+
+    /* Notification Bar */
+    .notification-bar {
+      background-color: #4c5c54;
+      color: white;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Header Styles */
+    header {
+      position: relative;
+      background: url('https://i.ibb.co/spHYkpXg/Untitled-design.png') center/cover no-repeat;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 0;
+    }
+
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 28px;
+      margin-bottom: 0.3rem;
+    }
+
+    .logo h1 {
+      font-family: 'Amatic SC', cursive;
+      color: white;
+      font-size: 2.3rem;
+      line-height: 1;
+    }
+
+    .logo span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      color: white;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+      display: block;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      gap: 3rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+      padding: 0.5rem 0;
+    }
+
+    nav a:hover {
+      opacity: 0.8;
+    }
+
+    nav a.active {
+      border-bottom: 2px solid #859d1f;
+    }
+
+    /* Desktop Navigation */
+    @media (min-width: 769px) {
+      nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .nav-row {
+        display: flex;
+        gap: 2rem;
+        margin: 0;
+      }
+
+      nav a {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+      }
+
+      nav {
+        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+
+      .nav-row {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 0.3rem 0;
+      }
+
+      .nav-row:last-child {
+        margin-top: 0.5rem;
+      }
+
+      nav a {
+        font-size: 1rem;
+        text-align: center;
+      }
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      padding: 4rem 1rem;
+      background: linear-gradient(rgba(76, 92, 84, 0.9), rgba(76, 92, 84, 0.9)), 
+                  url('https://images.unsplash.com/photo-1600857062241-98e5dba7f214?ixlib=rb-4.0.3') center/cover;
+      color: white;
+    }
+
+    .page-header h2 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-family: 'Montserrat', sans-serif;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Products Grid */
+    .products-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 1.8rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-info h3 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2.2rem;
+      color: #4c5c54;
+      margin-bottom: 0.8rem;
+    }
+
+    .product-description {
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 1.5rem;
+      color: #666;
+      flex-grow: 1;
+      font-size: 0.95rem;
+    }
+
+    .product-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .price {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: #859d1f;
+      font-size: 1.4rem;
+    }
+
+    .buy-button {
+      background-color: #859d1f;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .buy-button:hover {
+      background-color: #6e8619;
+    }
+
+    /* Categories */
+    .categories {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      background: white;
+      border: 2px solid #4c5c54;
+      color: #4c5c54;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background-color: #4c5c54;
+      color: white;
+    }
+
+    /* Back to Home */
+    .back-home {
+      text-align: center;
+      margin: 4rem 0 2rem;
+    }
+
+    .back-home a {
+      display: inline-block;
+      background-color: #859d1f;
+      color: white;
+      padding: 0.9rem 2.5rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .back-home a:hover {
+      background-color: #6e8619;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #4c5c54;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .social-links {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      color: white;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .social-links a:hover {
+      opacity: 1;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 1rem;
+      }
+
+      .page-header h2 {
+        font-size: 2.8rem;
+      }
+
+      .products-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .categories {
+        gap: 0.8rem;
+      }
+
+      .category-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h2 {
+        font-size: 2.3rem;
+      }
+
+      .product-info {
+        padding: 1.5rem;
+      }
+
+      .product-info h3 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notification-bar">
+    🎁 Free Shipping on Orders Over ₱500 | ⭐ Rated 4.9/5 by Our Customers
+  </div>
+
+  <header>
+    <div class="logo">
+      <img src="https://i.ibb.co/0jMjYkQy/leaf.png" alt="Leaf icon" />
+      <h1>Earth & Ember</h1>
+      <span>Organic Soap</span>
+    </div>
+    
+    <nav>
+      <div class="nav-row">
+        <a href="index.html">Home</a>
+        <a href="soaps.html" class="active">Handmade Soap</a>
+        <a href="#body-scrub">Body Scrub</a>
+      </div>
+      <div class="nav-row">
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="page-header">
+    <h2>Our Handmade Soap Collection</h2>
+    <p>Each bar is crafted with love using 100% organic ingredients, essential oils, and natural colorants. Experience the purity of nature in every wash.</p>
+  </div>
+
+  <div class="categories">
+    <button class="category-btn active">All Soaps</button>
+    <button class="category-btn">Floral</button>
+    <button class="category-btn">Citrus</button>
+    <button class="category-btn">Exfoliating</button>
+    <button class="category-btn">Moisturizing</button>
+  </div>
+
+  <div class="products-container">
+    <!-- Lavender Soap -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lavender Soap">
+      </div>
+      <div class="product-info">
+        <h3>Lavender Dream</h3>
+        <p class="product-description">Calming lavender essential oil blended with shea butter and oatmeal. Perfect for relaxing evening baths and sensitive skin.</p>
+        <div class="product-price">
+          <span class="price">₱200</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citrus Burst -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1556228578-efc8a6c6c8e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Citrus Soap">
+      </div>
+      <div class="product-info">
+        <h3>Citrus Burst</h3>
+        <p class="product-description">Energizing blend of orange, lemon, and grapefruit essential oils with exfoliating poppy seeds. Awakens your senses!</p>
+        <div class="product-price">
+          <span class="price">₱200</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coffee Scrub -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1594736797933-d1001a2e5b2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Coffee Soap">
+      </div>
+      <div class="product-info">
+        <h3>Coffee Awakening</h3>
+        <p class="product-description">Ground Arabica coffee beans with coconut oil and cinnamon. Excellent for cellulite reduction and morning energy.</p>
+        <div class="product-price">
+          <span class="price">₱220</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tea Tree -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tea Tree Soap">
+      </div>
+      <div class="product-info">
+        <h3>Tea Tree Clarify</h3>
+        <p class="product-description">Antibacterial tea tree oil with activated charcoal. Fights acne and impurities while detoxifying the skin.</p>
+        <div class="product-price">
+          <span class="price">₱210</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rose Petal -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1603532648955-039310d9ed75?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rose Soap">
+      </div>
+      <div class="product-info">
+        <h3>Rose Petal Bliss</h3>
+        <p class="product-description">Real rose petals suspended in a base of rosehip oil and shea butter. Hydrating and romantic fragrance.</p>
+        <div class="product-price">
+          <span class="price">₱230</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mint Cool -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mint Soap">
+      </div>
+      <div class="product-info">
+        <h3>Mint Cool</h3>
+        <p class="product-description">Refreshing peppermint and eucalyptus essential oils. Invigorating and cooling effect perfect for hot days.</p>
+        <div class="product-price">
+          <span class="price">₱200</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Oatmeal Honey -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1594736797933-d1001a2e5b2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Oatmeal Soap">
+      </div>
+      <div class="product-info">
+        <h3>Oatmeal & Honey</h3>
+        <p class="product-description">Soothing colloidal oatmeal with raw honey and almond oil. Gentle enough for eczema and dry skin conditions.</p>
+        <div class="product-price">
+          <span class="price">₱210</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charcoal Detox -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1556228578-efc8a6c6c8e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Charcoal Soap">
+      </div>
+      <div class="product-info">
+        <h3>Charcoal Detox</h3>
+        <p class="product-description">Activated bamboo charcoal with tea tree oil. Deep cleans pores and removes toxins from the skin.</p>
+        <div class="product-price">
+          <span class="price">₱220</span>
+          <button class="buy-button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-home">
+    <a href="index.html">← Back to Homepage</a>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2024 Earth & Ember | Crafted with nature in mind.</p>
+      <p>📍 Based in Manila, Philippines | ✉️ hello@earthember.com | 📞 +63 912 345 6789</p>
+      <div class="social-links">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Shopee</a>
+        <a href="#">Lazada</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Category filtering
+    document.querySelectorAll('.category-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // In a real implementation, you would filter products here
+        // For now, we'll just show a message
+        const category = this.textContent;
+        if (category !== 'All Soaps') {
+          alert(`Filtering by: ${category}\n\nIn a real website, this would filter the products.`);
+        }
+      });
+    });
+
+    // Add to Cart functionality
+    document.querySelectorAll('.buy-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const productCard = this.closest('.product-card');
+        const productName = productCard.querySelector('h3').textContent;
+        const productPrice = productCard.querySelector('.price').textContent;
+        
+        alert(`Added to cart: ${productName}\nPrice: ${productPrice}\n\nIn a real website, this would add the item to your shopping cart.`);
+        
+        // Visual feedback
+        const originalText = this.textContent;
+        this.textContent = '✓ Added!';
+        this.style.backgroundColor = '#4c5c54';
+        
+        setTimeout(() => {
+          this.textContent = originalText;
+          this.style.backgroundColor = '';
+        }, 2000);
+      });
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId !== '#') {
+          const target = document.querySelector(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
